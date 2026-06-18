@@ -1,0 +1,21 @@
+name: Deploy ke cPanel
+
+on:
+  push:
+    branches:
+      - main # Akan berjalan otomatis setiap ada push ke branch main
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: windows-latest
+    steps:
+      - name: Ambil kode terbaru
+        uses: actions/checkout@v4
+      
+      - name: Sync files ke cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
